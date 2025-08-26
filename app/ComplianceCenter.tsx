@@ -222,7 +222,7 @@ export default function ComplianceCenter() {
                       <div className="flex items-start gap-3">
                         <span className="mt-1 h-2.5 w-2.5 rounded-full bg-rose-500"></span>
                         <div>
-                          <div className="font-medium text-slate-900">New ransomware variant "DarkCrypt" detected</div>
+                          <div className="font-medium text-slate-900">New ransomware variant DarkCrypt detected</div>
                           <div className="text-xs text-slate-600">Targeting healthcare organizations · 2 hours ago</div>
                         </div>
                       </div>
