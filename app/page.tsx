@@ -9,6 +9,13 @@ import ActiveThreats from "./ActiveThreats";
 import PolicyManagement from "./PolicyManagement";
 import IncidentResponse from "./IncidentResponse";
 import ComplianceMonitoring from "./ComplianceMonitoring";
+import ExecutiveRiskHub from "./ExecutiveRiskHub";
+import VulnerabilityOps from "./VulnerabilityOps";
+import ComplianceCenter from "./ComplianceCenter";
+import ThreatWarRoom from "./ThreatWarRoom";
+import ThirdPartyRadar from "./ThirdPartyRadar";
+import AssetManagement from "./AssetManagement";
+import NetworkSecurity from "./NetworkSecurity";
 
 // Simple icon placeholders using Tailwind (no external deps)
 function DotIcon({ className = "h-4 w-4", color = "bg-blue-500" }) {
@@ -189,29 +196,6 @@ export default function Home() {
   );
 }
 
-function Card({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="bg-white border border-slate-200 rounded-2xl shadow-sm">{children}</div>
-  );
-}
-
-function CardContent({ children, className = "p-6" }: { children: React.ReactNode; className?: string }) {
-  return <div className={className}>{children}</div>;
-}
-
-function Progress({ value }: { value: number }) {
-  return (
-    <div className="h-2 w-full rounded-full bg-slate-200">
-      <div
-        className="h-2 rounded-full bg-blue-600"
-        style={{ width: `${Math.max(0, Math.min(100, value))}%` }}
-      />
-    </div>
-  );
-}
-
- 
-
 function Placeholder({ title }: { title: string }) {
   return (
     <div className="h-[60vh] flex items-center justify-center">
@@ -222,81 +206,4 @@ function Placeholder({ title }: { title: string }) {
     </div>
   );
 }
-  
-// --- Corporate pages ---
-function ExecutiveRiskHub() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Executive Summary</h3>
-        <p className="text-sm text-slate-600">Company-wide risk score, top exposures, and trending incidents.</p>
-      </CardContent>
-    </Card>
-  );
-}
 
-function VulnerabilityOps() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Vulnerability Operations</h3>
-        <p className="text-sm text-slate-600">Patch cadence, SLA breaches, and backlog overview.</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function ComplianceCenter() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Compliance Center</h3>
-        <p className="text-sm text-slate-600">Audits, evidence collection, and framework status.</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function ThreatWarRoom() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Threat War Room</h3>
-        <p className="text-sm text-slate-600">Active investigations and cross-team collaboration.</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function ThirdPartyRadar() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Third-Party Risk Radar</h3>
-        <p className="text-sm text-slate-600">Vendors, criticality tiers, and assessments.</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function AssetManagement() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Asset Management</h3>
-        <p className="text-sm text-slate-600">Inventory coverage and lifecycle tracking.</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function NetworkSecurity() {
-  return (
-    <Card>
-      <CardContent>
-        <h3 className="font-semibold text-slate-900 mb-2">Network Security</h3>
-        <p className="text-sm text-slate-600">Segmentation, IDS alerts, and firewall posture.</p>
-      </CardContent>
-    </Card>
-  );
-}
