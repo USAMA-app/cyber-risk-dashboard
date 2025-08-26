@@ -55,7 +55,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Shield className="lucide lucide-shield h-6 w-6 text-blue-400" />
-            <h1 className="text-lg font-semibold">CyberGuard Platform</h1>
+            <h1 className="text-lg font-semibold">Cyber Guard Platform</h1>
           </div>
 
           <div className="flex-1 max-w-md mx-8">
