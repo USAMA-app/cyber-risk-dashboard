@@ -7,7 +7,99 @@ export default function ExecutiveRiskHub() {
   return (
     <div className="space-y-6">
 
-       
+       { /* Risk Chart */ }
+       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+         {/* Left column: Info */}
+         <Card>
+           <CardContent className="p-6">
+            <h3 className="font-semibold text-slate-900 mb-4">Overview</h3>
+            <div className="space-y-4">
+              <div className="rounded-lg border border-slate-100 p-4 bg-slate-50">
+                <div className="text-sm text-slate-600">Industry Baseline</div>
+                <div className="mt-1 text-3xl font-semibold text-emerald-600">750</div>
+                <div className="text-[11px] text-slate-500 mt-1">Baseline derived from project info</div>
+              </div>
+              {/* Cyber Risk snapshot */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="rounded-lg border border-slate-100 p-3">
+                  <div className="text-xs text-slate-500">Attack Surface</div>
+                  <div className="mt-1 text-sm font-medium text-amber-600">Medium</div>
+                </div>
+                <div className="rounded-lg border border-slate-100 p-3">
+                  <div className="text-xs text-slate-500">Last Scan</div>
+                  <div className="mt-1 text-sm font-medium text-slate-800">2h ago</div>
+                </div>
+                <div className="rounded-lg border border-slate-100 p-3">
+                  <div className="text-xs text-slate-500">MTTR</div>
+                  <div className="mt-1 text-sm font-medium text-slate-800">12.3d</div>
+                </div>
+                <div className="rounded-lg border border-slate-100 p-3">
+                  <div className="text-xs text-slate-500">SLA Breaches (30d)</div>
+                  <div className="mt-1 text-sm font-semibold text-rose-600">3</div>
+                </div>
+              </div>
+
+              {/* Patch Compliance */}
+              <div className="rounded-lg border border-slate-100 p-4 hidden">
+                <div className="flex items-center justify-between text-xs text-slate-600">
+                  <span>Patch Compliance</span>
+                  <span className="font-medium text-slate-800">82%</span>
+                </div>
+                <div className="mt-2 h-2 w-full rounded-full bg-slate-100">
+                  <div className="h-2 rounded-full bg-emerald-500" style={{ width: '82%' }} />
+                </div>
+              </div>
+
+              {/* Top Risks */}
+              <div className="rounded-lg border border-slate-100 p-4 hidden">
+                <div className="text-sm font-medium text-slate-800 mb-2">Top Risks</div>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center justify-between">
+                    <span className="text-slate-600">Unpatched Infrastructure</span>
+                    <span className="text-rose-600 text-xs font-semibold">Critical</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-slate-600">Weak IAM Policies</span>
+                    <span className="text-amber-600 text-xs font-semibold">High</span>
+                  </li>
+                  <li className="flex items-center justify-between">
+                    <span className="text-slate-600">Phishing Exposure</span>
+                    <span className="text-yellow-600 text-xs font-semibold">Elevated</span>
+                  </li>
+                </ul>
+                <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-md bg-rose-50 p-2">
+                    <div className="text-xs text-slate-500">Critical</div>
+                    <div className="text-rose-600 font-semibold">23</div>
+                  </div>
+                  <div className="rounded-md bg-amber-50 p-2">
+                    <div className="text-xs text-slate-500">High</div>
+                    <div className="text-amber-600 font-semibold">47</div>
+                  </div>
+                  <div className="rounded-md bg-slate-50 p-2">
+                    <div className="text-xs text-slate-500">Medium</div>
+                    <div className="text-slate-700 font-semibold">112</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+         {/* Right column: Gauge */}
+         <Card>
+           <CardContent className="p-6">
+             <div className="flex items-start justify-between">
+               <h3 className="font-semibold text-slate-900">Risk Score Gauge</h3>
+               <span className="text-xs text-slate-500">Range: 0 - 900</span>
+             </div>
+             <div className="mt-4">
+               {/* Pass custom colors: red -> green */}
+               <RiskGauge value={640} min={0} max={900} gradientStart="#ef4444" gradientEnd="#10b981" />
+             </div>
+           </CardContent>
+         </Card>
+       </div>
        
         {/* Top KPIs */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -429,6 +521,76 @@ function MetricRow({
         <span className="text-sm text-slate-800">{label}</span>
       </div>
       <div className="text-sm">{value}</div>
+    </div>
+  );
+}
+
+/* ---------- Gauge Component ---------- */
+function RiskGauge({ value, min = 300, max = 900, gradientStart = "#ef4444", gradientEnd = "#10b981" }: { value: number; min?: number; max?: number; gradientStart?: string; gradientEnd?: string }) {
+  // Normalize inputs and clamp value
+  const lo = Math.min(min, max);
+  const hi = Math.max(min, max);
+  const v = Math.max(lo, Math.min(hi, value));
+  // Geometry
+  const cx = 150;
+  const cy = 150;
+  const r = 110;
+  const needleR = 90;
+  // Map value proportionally across the TOP semicircle using radians
+  const pct = (v - lo) / (hi - lo); // 0..1
+  const rad = Math.PI * (1 - pct); // pi (left) -> 0 (right)
+  const nx = cx + needleR * Math.cos(rad);
+  const ny = cy - needleR * Math.sin(rad); // minus to go upward on screen coords
+
+  // Helper to build a semicircle arc path
+  const arc = (radius: number) => `M ${cx - radius} ${cy} A ${radius} ${radius} 0 0 1 ${cx + radius} ${cy}`;
+
+  return (
+    <div className="w-full flex flex-col items-center">
+      <svg viewBox="0 0 300 190" className="w-full max-w-[520px] mx-auto">
+        <defs>
+          {/* Customizable gradient across the arc from start(left) -> end(right) */}
+          <linearGradient id="riskGradient" x1="40" y1="0" x2="260" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor={gradientStart} />
+            <stop offset="100%" stopColor={gradientEnd} />
+          </linearGradient>
+        </defs>
+
+        {/* Background faint arc */}
+        <path d={arc(r)} fill="none" stroke="#e5e7eb" strokeWidth={14} strokeLinecap="round" />
+
+        {/* Colored arc overlay */}
+        <path d={arc(r)} fill="none" stroke="url(#riskGradient)" strokeWidth={14} strokeLinecap="round" />
+
+        {/* Ticks across the top semicircle */}
+        {Array.from({ length: 7 }).map((_, i) => {
+          const t = i / 6; // 0..1
+          const a = Math.PI * (1 - t); // pi..0
+          const ir = r - 20;
+          const or = r - 6;
+          const x1 = cx + ir * Math.cos(a);
+          const y1 = cy - ir * Math.sin(a);
+          const x2 = cx + or * Math.cos(a);
+          const y2 = cy - or * Math.sin(a);
+          return (
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#cbd5e1" strokeWidth={2} />
+          );
+        })}
+
+        {/* Needle pivot */}
+        <circle cx={cx} cy={cy} r={6} fill="#0f172a" />
+        {/* Needle */}
+        <line x1={cx} y1={cy} x2={nx} y2={ny} stroke="#0f172a" strokeWidth={4} strokeLinecap="round" />
+
+        {/* Score value only */}
+        <text x={cx} y={cy + 35} textAnchor="middle" fontSize="26" fontWeight={600} fill="#0f172a">
+          {v}
+        </text>
+
+        {/* Bottom labels: numbers only */}
+        <text x={30} y={172} textAnchor="start" fontSize="12" fill="#475569">{lo}</text>
+        <text x={270} y={172} textAnchor="end" fontSize="12" fill="#475569">{hi}</text>
+      </svg>
     </div>
   );
 }
