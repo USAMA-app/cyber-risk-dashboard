@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Shield, Search, Users, AlertTriangle, Activity, ShieldCheck, LineChart, FileText, Eye, BarChart3, Briefcase, Bug, CheckCircle2, ShieldAlert, Link2, Boxes, Network, Menu } from "lucide-react";
+import { Shield, Search, Users, AlertTriangle, Activity, ShieldCheck, LineChart, FileText, Eye, BarChart3, Briefcase, Bug, CheckCircle2, ShieldAlert, Link2, Boxes, Network, Menu, Brain, Settings as SettingsIcon } from "lucide-react";
 import RiskOverview from "./RiskOverview";
 import RiskTrends from "./RiskTrends";
 import ClientPortfolio from "./ClientPortfolio";
@@ -16,6 +16,10 @@ import ThreatWarRoom from "./ThreatWarRoom";
 import ThirdPartyRadar from "./ThirdPartyRadar";
 import AssetManagement from "./AssetManagement";
 import NetworkSecurity from "./NetworkSecurity";
+import CorporateClients from "./CorporateClients";
+import AIInterface from "./AIInterface";
+import Reports from "./Reports";
+import Settings from "./Settings";
 
 // Simple icon placeholders using Tailwind (no external deps)
 function DotIcon({ className = "h-4 w-4", color = "bg-blue-500" }) {
@@ -56,12 +60,21 @@ export default function Home() {
 
   const corporateNav = [
     { id: "executive-risk-hub", label: "Executive Risk Hub", icon: Briefcase, iconClass: "lucide lucide-briefcase h-4 w-4 text-slate-400" },
+    { id: "corporate-clients", label: "Clients", icon: Users, iconClass: "lucide lucide-users h-4 w-4 text-slate-400" },
+    { id: "vulnerable-policies", label: "Vulnerable Policies", icon: FileText, iconClass: "lucide lucide-file-text h-4 w-4 text-slate-400" },
     { id: "vulnerability-ops", label: "Vulnerability Ops", icon: Bug, iconClass: "lucide lucide-bug h-4 w-4 text-slate-400" },
     { id: "compliance-center", label: "Compliance Center", icon: CheckCircle2, iconClass: "lucide lucide-check-circle-2 h-4 w-4 text-slate-400" },
     { id: "threat-war-room", label: "Threat War Room", icon: ShieldAlert, iconClass: "lucide lucide-shield-alert h-4 w-4 text-slate-400" },
     { id: "third-party-radar", label: "Third-Party Radar", icon: Link2, iconClass: "lucide lucide-link-2 h-4 w-4 text-slate-400" },
     { id: "asset-management", label: "Asset Management", icon: Boxes, iconClass: "lucide lucide-boxes h-4 w-4 text-slate-400" },
     { id: "network-security", label: "Network Security", icon: Network, iconClass: "lucide lucide-network h-4 w-4 text-slate-400" },
+  ];
+
+  // Shared Tools & Settings section
+  const toolsNav = [
+    { id: "ai-interface", label: "AI Assistant", icon: Brain, iconClass: "lucide lucide-brain h-4 w-4" },
+    { id: "reports", label: "Reports", icon: FileText, iconClass: "lucide lucide-file-text h-4 w-4" },
+    { id: "settings", label: "Settings", icon: SettingsIcon, iconClass: "lucide lucide-settings h-4 w-4" },
   ];
 
   const nav = mode === "insurance" ? insuranceNav : corporateNav;
@@ -112,7 +125,7 @@ export default function Home() {
                   setMode("insurance");
                   setPage("risk-overview");
                 }}
-                className={`flex-1 min-w-0 px-3 py-1.5 rounded-md text-sm whitespace-normal break-words text-center leading-snug ${
+                className={`flex-1 sm:flex-none min-w-0 px-3 py-1.5 rounded-md text-sm whitespace-normal break-words sm:whitespace-nowrap sm:break-normal text-center leading-snug sm:leading-normal ${
                   mode === "insurance"
                     ? "bg-blue-600 text-white"
                     : "text-slate-300 hover:text-white hover:bg-slate-700"
@@ -125,7 +138,7 @@ export default function Home() {
                   setMode("corporate");
                   setPage(mode === "corporate" ? page : "executive-risk-hub");
                 }}
-                className={`flex-1 min-w-0 px-3 py-1.5 rounded-md text-sm whitespace-normal break-words text-center leading-snug ${
+                className={`flex-1 sm:flex-none min-w-0 px-3 py-1.5 rounded-md text-sm whitespace-normal break-words sm:whitespace-nowrap sm:break-normal text-center leading-snug sm:leading-normal ${
                   mode === "corporate"
                     ? "bg-blue-600 text-white"
                     : "text-slate-300 hover:text-white hover:bg-slate-700"
@@ -199,6 +212,38 @@ export default function Home() {
                 </button>
               );
             })}
+            <div className="pt-3 mt-3 border-t border-slate-200">
+              <div className="px-2 pb-1 text-[11px] uppercase tracking-wide text-slate-500">Tools & Settings</div>
+              {toolsNav.map((item) => {
+                const active = page === item.id;
+                const activeClasses =
+                  mode === "insurance"
+                    ? "bg-blue-50 text-blue-700"
+                    : "bg-purple-50 text-purple-700";
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => { setPage(item.id); setMobileOpen(false); }}
+                    className={`w-full text-left px-3 py-2 rounded-md text-sm flex items-center gap-3 ${
+                      active
+                        ? activeClasses
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
+                  >
+                    {(() => {
+                      const Icon = item.icon as React.ElementType;
+                      const color = active
+                        ? mode === "insurance"
+                          ? "text-blue-600"
+                          : "text-purple-600"
+                        : "text-slate-400";
+                      return <Icon className={`${(item.iconClass as string)} ${color}`} />;
+                    })()}
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
           </nav>
         </div>
         {/* Sidebar */}
@@ -237,6 +282,38 @@ export default function Home() {
                 </button>
               );
             })}
+            <div className="pt-3 mt-3 border-t border-slate-200">
+              <div className="px-2 pb-1 text-[11px] uppercase tracking-wide text-slate-500">Tools & Settings</div>
+              {toolsNav.map((item) => {
+                const active = page === item.id;
+                const activeClasses =
+                  mode === "insurance"
+                    ? "bg-blue-50 text-blue-700"
+                    : "bg-purple-50 text-purple-700";
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setPage(item.id)}
+                    className={`w-full text-left px-3 py-2 rounded-md text-sm flex items-center gap-3 ${
+                      active
+                        ? activeClasses
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
+                  >
+                    {(() => {
+                      const Icon = item.icon as React.ElementType;
+                      const color = active
+                        ? mode === "insurance"
+                          ? "text-blue-600"
+                          : "text-purple-600"
+                        : "text-slate-400";
+                      return <Icon className={`${(item.iconClass as string)} ${color}`} />;
+                    })()}
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
           </nav>
         </aside>
 
@@ -257,12 +334,20 @@ export default function Home() {
               <IncidentResponse />
             ) : page === "compliance-monitoring" ? (
               <ComplianceMonitoring />
+            ) : page === "ai-interface" ? (
+              <AIInterface />
+            ) : page === "reports" ? (
+              <Reports />
+            ) : page === "settings" ? (
+              <Settings />
             ) : (
               <Placeholder title={`Insurance · ${nav.find(n => n.id === page)?.label ?? "Page"}`} />
             )
           ) : (
             page === "executive-risk-hub" ? (
               <ExecutiveRiskHub />
+            ) : page === "corporate-clients" ? (
+              <CorporateClients />
             ) : page === "vulnerability-ops" ? (
               <VulnerabilityOps />
             ) : page === "compliance-center" ? (
@@ -275,6 +360,12 @@ export default function Home() {
               <AssetManagement />
             ) : page === "network-security" ? (
               <NetworkSecurity />
+            ) : page === "ai-interface" ? (
+              <AIInterface />
+            ) : page === "reports" ? (
+              <Reports />
+            ) : page === "settings" ? (
+              <Settings />
             ) : (
               <Placeholder title={`Corporate · ${nav.find(n => n.id === page)?.label ?? "Page"}`} />
             )

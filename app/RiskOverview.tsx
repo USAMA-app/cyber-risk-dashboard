@@ -6,14 +6,27 @@ export default function RiskOverview() {
                     <div data-slot="card-content" className="p-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-slate-600">Total Clients</p>
+                                <p className="text-sm font-medium text-slate-600">Active Policies</p>
                                 <p className="text-2xl font-bold text-slate-900">2,847</p>
-                                <p className="text-xs text-emerald-600">+12% from last month</p>
+                                <p className="text-xs text-emerald-600">Total insured entities</p>
                             </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users h-8 w-8 text-blue-500">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="9" cy="7" r="4"></circle>
                                 <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div data-slot="card" className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
+                    <div data-slot="card-content" className="p-6">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-medium text-slate-600">Total Premium</p>
+                                <p className="text-2xl font-bold text-amber-600">$42.8M</p>
+                                <p className="text-xs text-slate-500">Annual premium collected</p>
+                            </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-activity h-8 w-8 text-amber-500">
+                                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
                             </svg>
                         </div>
                     </div>
@@ -33,19 +46,7 @@ export default function RiskOverview() {
                         </div>
                     </div>
                 </div>
-                <div data-slot="card" className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
-                    <div data-slot="card-content" className="p-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-slate-600">Active Incidents</p>
-                                <p className="text-2xl font-bold text-amber-600">43</p>
-                                <p className="text-xs text-slate-500">Avg response: 2.3h</p>
-                            </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-activity h-8 w-8 text-amber-500">
-                                <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+               
                 <div data-slot="card" className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
                     <div data-slot="card-content" className="p-6">
                         <div className="flex items-center justify-between">
