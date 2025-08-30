@@ -95,7 +95,7 @@ export default function ExecutiveRiskHub() {
              </div>
              <div className="mt-4">
                {/* Pass custom colors: red -> green */}
-               <RiskGauge value={640} min={0} max={900} gradientStart="#ef4444" gradientEnd="#10b981" />
+               <RiskGauge value={750} min={0} max={900} gradientStart="#ef4444" gradientEnd="#10b981" />
              </div>
            </CardContent>
          </Card>
