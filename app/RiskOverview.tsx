@@ -61,6 +61,49 @@ export default function RiskOverview() {
                     </div>
                 </div>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+                <button
+                    onClick={() => window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: "corporate-clients" } }))}
+                    className="text-left rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow transition hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                >
+                    <div className="flex items-center justify-between gap-4">
+                        <div>
+                            <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Quick Action</div>
+                            <div className="mt-1 text-base font-semibold text-slate-900">My Vulnerable Clients</div>
+                            <div className="text-xs text-slate-500">Review clients with elevated risk</div>
+                        </div>
+                        <div className="h-10 w-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-triangle-alert">
+                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
+                                <path d="M12 9v4"/>
+                                <path d="M12 17h.01"/>
+                            </svg>
+                        </div>
+                    </div>
+                </button>
+                <button
+                    onClick={() => window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: "client-portfolio" } }))}
+                    className="text-left rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow transition hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                >
+                    <div className="flex items-center justify-between gap-4">
+                        <div>
+                            <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Browse</div>
+                            <div className="mt-1 text-base font-semibold text-slate-900">View All Clients</div>
+                            <div className="text-xs text-slate-500">Search and explore full portfolio</div>
+                        </div>
+                        <div className="h-10 w-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div data-slot="card" className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm lg:col-span-2">
                     <div data-slot="card-header" className="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6">

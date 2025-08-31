@@ -48,8 +48,21 @@ export default function Home() {
     };
   }, [mobileOpen]);
 
+  // Allow child components to request navigation without props via a custom event.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ page?: string; mode?: "insurance" | "corporate" }>).detail || {};
+      if (detail.mode) setMode(detail.mode);
+      if (detail.page) setPage(detail.page);
+      setMobileOpen(false);
+    };
+    window.addEventListener("app:navigate", handler as EventListener);
+    return () => window.removeEventListener("app:navigate", handler as EventListener);
+  }, []);
+
   const insuranceNav = [
     { id: "risk-overview", label: "Risk Overview", icon: BarChart3, iconClass: "lucide lucide-bar-chart-3 h-4 w-4" },
+    { id: "corporate-clients", label: "Clients", icon: Users, iconClass: "lucide lucide-users h-4 w-4 text-slate-400" },    
     { id: "risk-trends", label: "Risk Trends", icon: LineChart, iconClass: "lucide lucide-line-chart h-4 w-4" },
     { id: "client-portfolio", label: "Client Portfolio", icon: Users, iconClass: "lucide lucide-users h-4 w-4" },
     { id: "active-threats", label: "Active Threats", icon: AlertTriangle, iconClass: "lucide lucide-alert-triangle h-4 w-4" },
@@ -60,8 +73,7 @@ export default function Home() {
 
   const corporateNav = [
     { id: "executive-risk-hub", label: "Executive Risk Hub", icon: Briefcase, iconClass: "lucide lucide-briefcase h-4 w-4 text-slate-400" },
-    { id: "corporate-clients", label: "Clients", icon: Users, iconClass: "lucide lucide-users h-4 w-4 text-slate-400" },
-    { id: "vulnerable-policies", label: "Vulnerable Policies", icon: FileText, iconClass: "lucide lucide-file-text h-4 w-4 text-slate-400" },
+    
     { id: "vulnerability-ops", label: "Vulnerability Ops", icon: Bug, iconClass: "lucide lucide-bug h-4 w-4 text-slate-400" },
     { id: "compliance-center", label: "Compliance Center", icon: CheckCircle2, iconClass: "lucide lucide-check-circle-2 h-4 w-4 text-slate-400" },
     { id: "threat-war-room", label: "Threat War Room", icon: ShieldAlert, iconClass: "lucide lucide-shield-alert h-4 w-4 text-slate-400" },
@@ -324,6 +336,8 @@ export default function Home() {
               <RiskOverview />
             ) : page === "risk-trends" ? (
               <RiskTrends />
+            ) : page === "corporate-clients" ? (
+              <CorporateClients />
             ) : page === "client-portfolio" ? (
               <ClientPortfolio />
             ) : page === "active-threats" ? (
@@ -346,9 +360,7 @@ export default function Home() {
           ) : (
             page === "executive-risk-hub" ? (
               <ExecutiveRiskHub />
-            ) : page === "corporate-clients" ? (
-              <CorporateClients />
-            ) : page === "vulnerability-ops" ? (
+            )  : page === "vulnerability-ops" ? (
               <VulnerabilityOps />
             ) : page === "compliance-center" ? (
               <ComplianceCenter />
