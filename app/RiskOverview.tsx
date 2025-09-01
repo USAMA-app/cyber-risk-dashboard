@@ -1,3 +1,5 @@
+import { Card, CardContent } from "./components/Card";
+
 export default function RiskOverview() {
     return (
        <div className="space-y-6">
@@ -6,8 +8,8 @@ export default function RiskOverview() {
                     <div data-slot="card-content" className="p-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-slate-600">Active Policies</p>
                                 <p className="text-2xl font-bold text-slate-900">2,847</p>
+                                <p className="text-sm font-medium text-slate-600">Active Policies</p>
                                 <p className="text-xs text-emerald-600">Total insured entities</p>
                             </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users h-8 w-8 text-blue-500">
                                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -22,8 +24,8 @@ export default function RiskOverview() {
                     <div data-slot="card-content" className="p-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-slate-600">Total Premium</p>
                                 <p className="text-2xl font-bold text-amber-600">$42.8M</p>
+                                <p className="text-sm font-medium text-slate-600">Total Premium</p>
                                 <p className="text-xs text-slate-500">Annual premium collected</p>
                             </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-activity h-8 w-8 text-amber-500">
                                 <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
@@ -35,8 +37,8 @@ export default function RiskOverview() {
                     <div data-slot="card-content" className="p-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-slate-600">High Risk Clients</p>
                                 <p className="text-2xl font-bold text-red-600">127</p>
+                                <p className="text-sm font-medium text-slate-600">High Risk Clients</p>
                                 <p className="text-xs text-red-600">+3 this week</p>
                             </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-triangle-alert h-8 w-8 text-red-500">
                                 <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
@@ -51,8 +53,8 @@ export default function RiskOverview() {
                     <div data-slot="card-content" className="p-6">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-slate-600">Portfolio Value</p>
                                 <p className="text-2xl font-bold text-slate-900">$847M</p>
+                                <p className="text-sm font-medium text-slate-600">Portfolio Value</p>
                                 <p className="text-xs text-emerald-600">Protected coverage</p>
                             </div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shield h-8 w-8 text-emerald-500">
                                 <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
@@ -62,47 +64,45 @@ export default function RiskOverview() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-                <button
-                    onClick={() => window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: "corporate-clients" } }))}
-                    className="text-left rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow transition hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
-                >
-                    <div className="flex items-center justify-between gap-4">
+
+            {/* Full-width Bottom Actions */}
+            <Card>
+                <CardContent className="p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4" onClick={() => window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: "corporate-clients" } }))}>
+                    {/* My Vulnerable Clients */}
+                    <div className="rounded-xl border border-slate-100 bg-white shadow-sm p-5 flex items-center justify-between">
                         <div>
-                            <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Quick Action</div>
-                            <div className="mt-1 text-base font-semibold text-slate-900">My Vulnerable Clients</div>
-                            <div className="text-xs text-slate-500">Review clients with elevated risk</div>
+                        <div className="text-[11px] tracking-wider text-slate-500">QUICK ACTION</div>
+                        <div className="mt-1 text-lg font-semibold text-slate-900">My Vulnerable Clients</div>
+                        <div className="mt-1 text-sm text-slate-600">Review clients with elevated risk</div>
                         </div>
-                        <div className="h-10 w-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-triangle-alert">
-                                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/>
-                                <path d="M12 9v4"/>
-                                <path d="M12 17h.01"/>
-                            </svg>
-                        </div>
+                        <span className="h-10 w-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M12 2l10 18H2L12 2z" />
+                            <path d="M12 9v4M12 17h.01" />
+                        </svg>
+                        </span>
                     </div>
-                </button>
-                <button
+
+                    {/* View All Clients */}
+                    <div 
                     onClick={() => window.dispatchEvent(new CustomEvent("app:navigate", { detail: { page: "client-portfolio" } }))}
-                    className="text-left rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow transition hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-400"
-                >
-                    <div className="flex items-center justify-between gap-4">
+                    className="rounded-xl border border-slate-100 bg-white shadow-sm p-5 flex items-center justify-between">
                         <div>
-                            <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Browse</div>
-                            <div className="mt-1 text-base font-semibold text-slate-900">View All Clients</div>
-                            <div className="text-xs text-slate-500">Search and explore full portfolio</div>
+                        <div className="text-[11px] tracking-wider text-slate-500">BROWSE</div>
+                        <div className="mt-1 text-lg font-semibold text-slate-900">View All Clients</div>
+                        <div className="mt-1 text-sm text-slate-600">Search and explore full portfolio</div>
                         </div>
-                        <div className="h-10 w-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-users">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                        </div>
+                        <span className="h-10 w-10 rounded-xl bg-slate-50 text-slate-600 flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <circle cx="9" cy="8" r="3" />
+                            <path d="M2 20c1.5-3 4.5-5 7-5s5.5 2 7 5" />
+                        </svg>
+                        </span>
                     </div>
-                </button>
-            </div>
+                    </div>
+                </CardContent>
+            </Card>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div data-slot="card" className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm lg:col-span-2">
@@ -159,10 +159,7 @@ export default function RiskOverview() {
                     <div data-slot="card-header" className="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6">
                         <div data-slot="card-title" className="leading-none font-semibold text-slate-900">Overall Risk Grade</div>
                     </div>
-                    <div data-slot="card-content" className="px-6">
-                        <div className="flex items-center justify-center mb-6">
-                            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg"><span className="text-4xl font-bold text-white">B+</span></div>
-                        </div>
+                    <div data-slot="card-content" className="px-6"> 
                         <div className="space-y-4">
                             <div className="flex justify-between items-center"><span className="text-sm text-slate-600">Portfolio Health</span><span className="text-sm font-bold text-black">78%</span></div>
                             <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">

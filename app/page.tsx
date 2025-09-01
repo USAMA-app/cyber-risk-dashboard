@@ -106,7 +106,7 @@ export default function Home() {
               <Menu className="h-5 w-5" />
             </button>
             <Shield className="lucide lucide-shield h-6 w-6 text-blue-400" />
-            <h1 className="text-lg font-semibold">Cyber Guard Platform</h1>
+            <h1 className="text-lg font-semibold">Cyber Score Pro</h1>
           </div>
 
           <div className="w-full sm:flex-1 sm:max-w-md sm:mx-8">
@@ -116,6 +116,35 @@ export default function Home() {
                 placeholder="Search clients, policies, risk assessments..."
                 className="w-full pl-9 pr-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder:text-slate-400"
               />
+            </div>
+            {/* Centered mode buttons aligned exactly under the search input */}
+            <div className="mt-2 bg-slate-800 p-1 rounded-lg inline-flex gap-1 justify-center w-full">
+              <button
+                onClick={() => {
+                  setMode("insurance");
+                  setPage("risk-overview");
+                }}
+                className={`px-4 py-1.5 rounded-md text-sm text-center ${
+                  mode === "insurance"
+                    ? "bg-blue-600 text-white"
+                    : "text-slate-300 hover:text-white hover:bg-slate-700"
+                }`}
+              >
+                Insurance-Focused Features
+              </button>
+              <button
+                onClick={() => {
+                  setMode("corporate");
+                  setPage(mode === "corporate" ? page : "executive-risk-hub");
+                }}
+                className={`px-4 py-1.5 rounded-md text-sm text-center ${
+                  mode === "corporate"
+                    ? "bg-blue-600 text-white"
+                    : "text-slate-300 hover:text-white hover:bg-slate-700"
+                }`}
+              >
+                Corporate-Focused Features
+              </button>
             </div>
           </div>
 
@@ -129,38 +158,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-4 px-4">
-          <div className="flex justify-center">
-            <div className="bg-slate-800 p-1 rounded-lg inline-flex gap-1 w-full sm:w-auto overflow-hidden">
-              <button
-                onClick={() => {
-                  setMode("insurance");
-                  setPage("risk-overview");
-                }}
-                className={`flex-1 sm:flex-none min-w-0 px-3 py-1.5 rounded-md text-sm whitespace-normal break-words sm:whitespace-nowrap sm:break-normal text-center leading-snug sm:leading-normal ${
-                  mode === "insurance"
-                    ? "bg-blue-600 text-white"
-                    : "text-slate-300 hover:text-white hover:bg-slate-700"
-                }`}
-              >
-                Insurance-Focused Features
-              </button>
-              <button
-                onClick={() => {
-                  setMode("corporate");
-                  setPage(mode === "corporate" ? page : "executive-risk-hub");
-                }}
-                className={`flex-1 sm:flex-none min-w-0 px-3 py-1.5 rounded-md text-sm whitespace-normal break-words sm:whitespace-nowrap sm:break-normal text-center leading-snug sm:leading-normal ${
-                  mode === "corporate"
-                    ? "bg-blue-600 text-white"
-                    : "text-slate-300 hover:text-white hover:bg-slate-700"
-                }`}
-              >
-                Corporate-Focused Features
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Removed separate buttons row; now they sit under the search */}
       </header>
 
       {/* Body */}

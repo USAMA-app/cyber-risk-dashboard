@@ -2,8 +2,35 @@
 
 import React from "react";
 import { Card, CardContent } from "./components/Card";
+// Helpers to map score to executive-friendly insights
+function getRiskTier(score: number) {
+  // 0-900 scale: higher is better
+  if (score >= 800) return { tier: "Low", color: "emerald", note: "Healthy posture" } as const;
+  if (score >= 700) return { tier: "Moderate", color: "amber", note: "Manageable risk" } as const;
+  if (score >= 600) return { tier: "High", color: "rose", note: "Executive attention" } as const;
+  return { tier: "Severe", color: "rose", note: "Immediate action required" } as const;
+}
+function formatMoney(n: number) {
+  return `$${(n / 1_000_000).toFixed(1)}M`;
+}
 
 export default function ExecutiveRiskHub() {
+  // Derived metrics for corporate context
+  const riskScore = 750;
+  const min = 0;
+  const max = 900;
+  const industryBaseline = 850;
+  const delta = riskScore - industryBaseline; // positive means better than baseline
+  const tier = getRiskTier(riskScore);
+  // Simple illustrative multiplier: lower scores imply higher modeled loss
+  const estAnnualizedLoss = Math.max(0, (max - riskScore)) * 3000; // dollars
+  const badgeClasses =
+    tier.color === "emerald"
+      ? "bg-emerald-50 text-emerald-700"
+      : tier.color === "amber"
+      ? "bg-amber-50 text-amber-700"
+      : "bg-rose-50 text-rose-700";
+  const deltaClass = delta >= 0 ? "text-emerald-700" : "text-rose-700";
   return (
     <div className="space-y-6">
 
@@ -12,30 +39,36 @@ export default function ExecutiveRiskHub() {
          {/* Left column: Info */}
          <Card>
            <CardContent className="p-6">
-            <h3 className="font-semibold text-slate-900 mb-4">Overview</h3>
+             <h3 className="font-semibold text-slate-900 mb-4">Overview</h3>
             <div className="space-y-4">
               <div className="rounded-lg border border-slate-100 p-4 bg-slate-50">
-                <div className="text-sm text-slate-600">Industry Baseline</div>
-                <div className="mt-1 text-3xl font-semibold text-emerald-600">750</div>
-                <div className="text-[11px] text-slate-500 mt-1">Baseline derived from project info</div>
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-sm text-slate-600">Your Score</div>
+                    <div className={`mt-1 text-3xl font-semibold ${riskScore < 600 ? 'text-rose-600' : riskScore < 850 ? 'text-amber-600' : 'text-emerald-600'}`}>{riskScore}</div>
+                    <div className="text-[11px] text-slate-500 mt-1">Last Scan Date: 2025-08-01</div>
+                  </div>
+                  <div className="shrink-0">
+                    <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${riskScore < 600 ? 'from-rose-500 to-rose-600' : riskScore < 850 ? 'from-amber-500 to-amber-600' : 'from-emerald-500 to-emerald-600'} flex items-center justify-center shadow`}>
+                      <span className="text-2xl font-bold text-white">{riskScore >= 900 ? 'A' : riskScore >= 850 ? 'A-' : riskScore >= 800 ? 'B+' : riskScore >= 700 ? 'B' : riskScore >= 600 ? 'B-' : 'C'}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              {/* Cyber Risk snapshot */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-lg border border-slate-100 p-3">
-                  <div className="text-xs text-slate-500">Attack Surface</div>
-                  <div className="mt-1 text-sm font-medium text-amber-600">Medium</div>
-                </div>
-                <div className="rounded-lg border border-slate-100 p-3">
-                  <div className="text-xs text-slate-500">Last Scan</div>
-                  <div className="mt-1 text-sm font-medium text-slate-800">2h ago</div>
-                </div>
-                <div className="rounded-lg border border-slate-100 p-3">
-                  <div className="text-xs text-slate-500">MTTR</div>
-                  <div className="mt-1 text-sm font-medium text-slate-800">12.3d</div>
-                </div>
-                <div className="rounded-lg border border-slate-100 p-3">
-                  <div className="text-xs text-slate-500">SLA Breaches (30d)</div>
-                  <div className="mt-1 text-sm font-semibold text-rose-600">3</div>
+
+              {/* Duplicate box with 850 */}
+              <div className="rounded-lg border border-slate-100 p-4 bg-slate-50">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-sm text-slate-600">Industry Baseline</div>
+                    <div className={`mt-1 text-3xl font-semibold ${industryBaseline < 600 ? 'text-rose-600' : industryBaseline < 850 ? 'text-amber-600' : 'text-emerald-600'}`}>{industryBaseline}</div>
+                    <div className="text-[11px] text-slate-500 mt-1">Total Industry Sample: xx</div>
+                  </div>
+                  <div className="shrink-0">
+                    <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${industryBaseline < 600 ? 'from-rose-500 to-rose-600' : industryBaseline < 850 ? 'from-amber-500 to-amber-600' : 'from-emerald-500 to-emerald-600'} flex items-center justify-center shadow`}>
+                      <span className="text-2xl font-bold text-white">{industryBaseline >= 900 ? 'A' : industryBaseline >= 850 ? 'A-' : industryBaseline >= 800 ? 'B+' : industryBaseline >= 700 ? 'B' : industryBaseline >= 600 ? 'B-' : 'C'}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -82,6 +115,7 @@ export default function ExecutiveRiskHub() {
                   </div>
                 </div>
               </div>
+              {/* Bottom Industry Baseline text removed as requested */}
             </div>
           </CardContent>
         </Card>
@@ -95,11 +129,12 @@ export default function ExecutiveRiskHub() {
              </div>
              <div className="mt-4">
                {/* Pass custom colors: red -> green */}
-               <RiskGauge value={750} min={0} max={900} gradientStart="#ef4444" gradientEnd="#10b981" />
-             </div>
-           </CardContent>
-         </Card>
-       </div>
+               <RiskGauge value={riskScore} min={min} max={max} gradientStart="#ef4444" gradientEnd="#10b981" />
+              </div>
+               
+            </CardContent>
+          </Card>
+        </div>
        
         {/* Top KPIs */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -262,7 +297,7 @@ export default function ExecutiveRiskHub() {
           </Card>
         </div>
 
-        
+         
 
 
     </div>
@@ -295,10 +330,8 @@ function StatCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm font-medium text-slate-600">{title}</p>
-            <div className="mt-2 flex items-baseline gap-2">
-              <div className="text-3xl font-semibold text-slate-900">{value}</div>
-            </div>
+            <div className="text-3xl font-semibold text-slate-900">{value}</div>
+            <p className="mt-1 text-sm font-medium text-slate-600">{title}</p>
             {sub ? <div className="mt-1 text-xs">{sub}</div> : null}
           </div>
           <div className={`h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center ${iconColor}`}>
@@ -536,14 +569,47 @@ function RiskGauge({ value, min = 300, max = 900, gradientStart = "#ef4444", gra
   const cy = 150;
   const r = 110;
   const needleR = 90;
+  const arcStroke = 18; // thicker arc stroke
   // Map value proportionally across the TOP semicircle using radians
   const pct = (v - lo) / (hi - lo); // 0..1
   const rad = Math.PI * (1 - pct); // pi (left) -> 0 (right)
   const nx = cx + needleR * Math.cos(rad);
   const ny = cy - needleR * Math.sin(rad); // minus to go upward on screen coords
+  const needleColor = v < 600 ? '#dc2626' : v < 850 ? '#d97706' : '#16a34a';
 
   // Helper to build a semicircle arc path
   const arc = (radius: number) => `M ${cx - radius} ${cy} A ${radius} ${radius} 0 0 1 ${cx + radius} ${cy}`;
+
+  // Helper: arc path between two values along the top semicircle
+  const arcBetween = (radius: number, fromVal: number, toVal: number) => {
+    const clamp = (val: number) => Math.max(lo, Math.min(hi, val));
+    const t1 = (clamp(fromVal) - lo) / (hi - lo); // 0..1
+    const t2 = (clamp(toVal) - lo) / (hi - lo);
+    const a1 = Math.PI * (1 - t1);
+    const a2 = Math.PI * (1 - t2);
+    const x1 = cx + radius * Math.cos(a1);
+    const y1 = cy - radius * Math.sin(a1);
+    const x2 = cx + radius * Math.cos(a2);
+    const y2 = cy - radius * Math.sin(a2);
+    const largeArc = Math.abs(a2 - a1) > Math.PI ? 1 : 0;
+    return `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`;
+  };
+
+  // Helper to get coordinates along the arc for a t in [0..1] (left->right)
+  const pointOnArc = (t: number, radius: number) => {
+    const a = Math.PI * (1 - t);
+    return {
+      x: cx + radius * Math.cos(a),
+      y: cy - radius * Math.sin(a),
+    };
+  };
+
+  // Helper: coordinate at a specific value along the gauge
+  const pointForValue = (val: number, radius: number) => {
+    const clamped = Math.max(lo, Math.min(hi, val));
+    const t = (clamped - lo) / (hi - lo);
+    return pointOnArc(t, radius);
+  };
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -557,10 +623,32 @@ function RiskGauge({ value, min = 300, max = 900, gradientStart = "#ef4444", gra
         </defs>
 
         {/* Background faint arc */}
-        <path d={arc(r)} fill="none" stroke="#e5e7eb" strokeWidth={14} strokeLinecap="round" />
+        <path d={arc(r)} fill="none" stroke="#e5e7eb" strokeWidth={arcStroke} strokeLinecap="round" />
 
-        {/* Colored arc overlay */}
-        <path d={arc(r)} fill="none" stroke="url(#riskGradient)" strokeWidth={14} strokeLinecap="round" />
+        {/* Colored arc overlay split into red/yellow/green segments (muted, professional hues) */}
+        {(() => {
+          const redEnd = Math.max(lo, Math.min(hi, 600));
+          const greenStart = Math.max(lo, Math.min(hi, 850));
+          const redColor = "#dc2626";    // red-600
+          const amberColor = "#d97706";  // amber-600 (slightly muted)
+          const greenColor = "#16a34a";  // green-600
+          return (
+            <g>
+              {/* Red segment: lo -> redEnd */}
+              {redEnd > lo && (
+                <path d={arcBetween(r, lo, redEnd)} fill="none" stroke={redColor} strokeOpacity={0.95} strokeWidth={arcStroke} strokeLinecap="butt" />
+              )}
+              {/* Yellow segment: redEnd -> greenStart */}
+              {greenStart > redEnd && (
+                <path d={arcBetween(r, redEnd, greenStart)} fill="none" stroke={amberColor} strokeOpacity={0.95} strokeWidth={arcStroke} strokeLinecap="butt" />
+              )}
+              {/* Green segment: greenStart -> hi */}
+              {hi > greenStart && (
+                <path d={arcBetween(r, greenStart, hi)} fill="none" stroke={greenColor} strokeOpacity={0.95} strokeWidth={arcStroke} strokeLinecap="butt" />
+              )}
+            </g>
+          );
+        })()}
 
         {/* Ticks across the top semicircle */}
         {Array.from({ length: 7 }).map((_, i) => {
@@ -573,19 +661,41 @@ function RiskGauge({ value, min = 300, max = 900, gradientStart = "#ef4444", gra
           const x2 = cx + or * Math.cos(a);
           const y2 = cy - or * Math.sin(a);
           return (
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#cbd5e1" strokeWidth={2} />
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#cbd5e1" strokeWidth={3} />
+          );
+        })}
+
+        {/* Icons aligned to segment starts: min, 600, 850 */}
+        {[
+          { v: lo, color: "#dc2626", type: "warn" },
+          { v: 600, color: "#d97706", type: "shield" },
+          { v: 850, color: "#16a34a", type: "check" },
+        ].map((mark, idx) => {
+          const p = pointForValue(mark.v, r - 28);
+          return (
+            <g key={idx} transform={`translate(${p.x}, ${p.y})`}>
+              <circle r={10} fill="#f8fafc" stroke={mark.color} strokeWidth={1.5} />
+              {mark.type === "warn" ? (
+                <path d="M0,-5 L4,3 L-4,3 Z" fill={mark.color} opacity={0.9} />
+              ) : mark.type === "shield" ? (
+                <path d="M0,-6 C3,-6 6,-4 6,-1 C6,3 3,6 0,8 C-3,6 -6,3 -6,-1 C-6,-4 -3,-6 0,-6 Z" fill={mark.color} opacity="0.9" />
+              ) : (
+                <path d="M-4,1 L-1,4 L5,-3" fill="none" stroke={mark.color} strokeWidth={2} strokeLinecap="round" />
+              )}
+            </g>
           );
         })}
 
         {/* Needle pivot */}
-        <circle cx={cx} cy={cy} r={6} fill="#0f172a" />
+        <circle cx={cx} cy={cy} r={6} fill={needleColor} />
         {/* Needle */}
-        <line x1={cx} y1={cy} x2={nx} y2={ny} stroke="#0f172a" strokeWidth={4} strokeLinecap="round" />
+        <line x1={cx} y1={cy} x2={nx} y2={ny} stroke={needleColor} strokeWidth={5} strokeLinecap="round" />
 
         {/* Score value only */}
         <text x={cx} y={cy + 35} textAnchor="middle" fontSize="26" fontWeight={600} fill="#0f172a">
           {v}
         </text>
+        <text x={cx} y={cy + 52} textAnchor="middle" fontSize="12" fill="#475569">Your Score</text>
 
         {/* Bottom labels: numbers only */}
         <text x={30} y={172} textAnchor="start" fontSize="12" fill="#475569">{lo}</text>
